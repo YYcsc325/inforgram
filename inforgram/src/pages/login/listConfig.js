@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox } from 'antd'; 
-import TrafficScenario from '../../components/TrafficScenario/index'
+// import TrafficScenario from '../../components/TrafficScenario/index'
 import './index.less'
 const formItemLayout = {
     labelCol: {

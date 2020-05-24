@@ -48,35 +48,6 @@ export default function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => ({ data }))
+    .then((data = {}) => data.result || {})
     .catch(err => ({ err }));
-}
-
-
-export function uploadFunc({ action, data, file, filename, onError, onSuccess, headers }) {
-  const formData = new FormData();
-  if (data) {
-    Object.keys(data).map(key => {
-      formData.append(key, data[key]);
-    });
-  }
-  formData.append(filename, file);
-  if (action.indexOf('?') === -1) {
-    action = action + '?';
-  }
-  const actionWithCtoken = `${action}&ctoken=${/*getToken()*/'a'}`;
-  fetch(actionWithCtoken, {
-    method: 'POST',
-    body: formData,
-    headers,
-    credentials: 'include',
-  })
-    .then(checkStatus)
-    .then(response => {
-      return response.json();
-    })
-    .then(resData => {
-      onSuccess(resData, file);
-    })
-    .catch(onError);
 }

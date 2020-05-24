@@ -6,11 +6,14 @@ import FormView from '../../../components/FormView/formView';
 import listConfig from '../listConfig';
 import '../index.less';
 
-const RightComponent = () => {
+const RightComponent = (props) => {
+    const { login } = props;
     const [form] = Form.useForm();
     const handleSubmit = (form) => {
         form.validateFields().then(values => {
-            console.log(values, 'values')
+            if(login){
+                login(values);
+            }
         })
     }
     const config = listConfig({

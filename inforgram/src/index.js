@@ -15,8 +15,9 @@ initialState: {
 // app.use({});
 
 // 3. Model
-// app.model(require('./models/example').default);
+app.model(require('./models/admintes').default);
 app.model(require('./models/products').default);
+
 // 4. Router
 app.router(require('./router').default);
 

@@ -1,3 +1,6 @@
+import React from 'react';
+import { message } from 'antd'
+
 // 字符串去重复
 export function uniqueStr(arr){
     return [new Set([...arr])];
