@@ -2,7 +2,7 @@ import { queryList } from '../services/admgr';
 import { getIn } from '../utils/utils'
 
 export default {
-  namespace: 'admintes',
+  namespace: 'user',
   state: {},
   effects: {
     *fetchList({ payload, key, entity, mapData, customkey }, { call, put }) {

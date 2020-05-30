@@ -1,7 +1,8 @@
 import React from 'react';
 import { Checkbox } from 'antd'; 
-// import TrafficScenario from '../../components/TrafficScenario/index'
-import './index.less'
+import Cookies from 'js-cookie'
+import './index.less';
+
 const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -12,18 +13,18 @@ const formItemLayout = {
       sm: { span: 24 },
     },
 }
-export default function listConfig(props){
+function jsonParse(strObj){
+    try{
+        return JSON.parse(strObj);
+    }catch(e){
+       console.log(e);
+       return {}
+    }
+}
+export function listConfig(props){
     const { handleSubmit, form } = props;
+    const { email, password } = jsonParse(Cookies.get('userLogin')) || {};
     return [
-        // {
-        //     type:'custom',
-        //     key: 'trafficScenario',
-        //     label: '流量场景',
-        //     // formItemLayout: formItemLayout,
-        //     render: () => {
-        //         return <TrafficScenario />
-        //     }
-        // },
         {
             key: 'email',
             type: 'input',
@@ -38,9 +39,10 @@ export default function listConfig(props){
             },
             formItemLayout: formItemLayout,
             customRender: () => {
-                return <div style={{float: 'left', color: '#434343', fontSize: '11px', fontWeight: 500, lineHeight: '13px', marginBottom: '8px'}}>Email:</div>
+                return <div style={{textAlign: 'left', color: '#434343', fontSize: '11px', fontWeight: 500, lineHeight: '13px', marginBottom: '8px'}}>Email:</div>
             },
-            placeholder: 'pleace input username'
+            placeholder: 'pleace input username',
+            initialValue: email
         },{
             key: 'passWord',
             type: 'input',
@@ -55,8 +57,10 @@ export default function listConfig(props){
                 }
             ],
             customRender: () => {
-                return <div style={{float: 'left', color: '#434343', fontSize: '11px', fontWeight: 500, lineHeight: '13px', marginBottom: '8px'}}>Password:</div>
+                return <div style={{textAlign: 'left', color: '#434343', fontSize: '11px', fontWeight: 500, lineHeight: '13px', marginBottom: '8px'}}>Password:</div>
             },
+            needHide: true,
+            initialValue: password,
             placeholder: 'pleace input password'
         },{
             type:'custom',
@@ -64,7 +68,20 @@ export default function listConfig(props){
             formItemLayout: formItemLayout,
             render: () => {
                 return <div className='selectCheckBox'>
-                    <span style={{float: 'left'}}><Checkbox>Remember me</Checkbox></span>
+                    <span style={{float: 'left'}}><Checkbox onChange={(e) => {
+                        const { checked } = e.target;
+                        let Email = form.getFieldValue('email');
+                        let Password = form.getFieldValue('passWord');
+                        if(checked){
+                            Cookies.set('userLogin', {
+                                email: Email,
+                                password: Password,
+                                boxChecked: checked
+                            },{ expires: 1 })
+                        }else{
+                            Cookies.remove('userLogin')
+                        }
+                    }}>Remember me</Checkbox></span>
                     <a>Forgot password?</a>
                 </div>
             }

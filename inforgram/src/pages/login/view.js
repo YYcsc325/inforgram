@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import './index.less';
 import LeftComponent from './Components/leftComponent';
 import RightComponent from './Components/RightComponent'
+import './index.less';
 
 class Index extends Component {
     constructor(props) {

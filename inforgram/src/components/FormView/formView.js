@@ -5,9 +5,8 @@
  */
 import React, { Component, Fragment } from 'react';
 import { Select, Form, Input } from 'antd'; 
-
+import styles from './FormView.less'
  const Option = Select.Option;
- const FormItem = Form.Item;
 
  const formItemLayout = {
     labelCol: {
@@ -18,8 +17,7 @@ import { Select, Form, Input } from 'antd';
       xs: { span: 24 },
       sm: { span: 18 },
     },
-  };
-
+ };
  class FormView extends Component {
      constructor(props){
          super(props)
@@ -28,14 +26,16 @@ import { Select, Form, Input } from 'antd';
          }
      }
      render(){
-         const { config, className, form } = this.props;
-         const mayLayOut = {
+         const { config, className, form, layOut } = this.props;
+        //  const newLayOut = formLayOut[layOut] || 'horizontal';
+        //  const FormInitialValue = filterInitValue(config);
+         const mapTypeToUI = {
              // 自定义渲染
              custom: (item, newFormItemLayout) => {
                  const { render:_render, style, className, label, key } = item;
                  
                  return (
-                    <FormItem
+                    <Form.Item
                       style={style}
                       className={className}
                       name={key}
@@ -47,41 +47,47 @@ import { Select, Form, Input } from 'antd';
                         {
                             _render ? _render(item) : null
                         }
-                    </FormItem>
+                    </Form.Item>
                  )
              },
              input: (item, newFormItemLayout) => {
-                 const { onChange, style = {}, placeholder, disabled, rules, initialValue, key, label, customRender } = item;
+                 const { onChange, style = {}, placeholder, disabled, rules = [], initialValue, key, label, customRender } = item;
                  const { width, ...reset } = style;
                  return (
-                    <FormItem
+                   <div>
+                    {customRender && customRender()}
+                    <Form.Item
                       label={label}
                       name={key}  
                       rules={rules}
+                      initialValue={initialValue}
                       {...newFormItemLayout}
-                      initialValues={initialValue}
                     >
-                      <div>
-                        {customRender && customRender()}
+                      {
+                        item.needHide ? 
+                        <Input.Password 
+                          placeholder={placeholder}
+                        /> : 
                         <Input
                           onChange={onChange}
                           style={{ width: width || '100%', ...reset }}
                           placeholder={placeholder}
                           disabled={disabled}
                         />
-                      </div>
-                    </FormItem>
+                      }
+                    </Form.Item>
+                   </div>
                  )
              },
              select: (item, newFormItemLayout) => {
-                 const { options = [], onchange, key, rules, label, initialValue, placeholder, disabled } = item;
+                 const { options = [], onchange, key, rules = [], label, initialValue, placeholder, disabled } = item;
                  return (
-                    <FormItem
+                    <Form.Item
                       label={label}
                       {...newFormItemLayout}
                       name={key}  
                       rules={rules}
-                      initialValues={initialValue}
+                      initialValue={initialValue}
                     >
                       <Select
                           onchange={onchange}
@@ -92,37 +98,35 @@ import { Select, Form, Input } from 'antd';
                             options.map(items => (<Option key={items.key}>{items.value}</Option>))
                           }
                       </Select>
-                    </FormItem>
-                    
+                    </Form.Item> 
                  )
              },
          }
+         const FormItems = config.map((item, index) => {
+           const newFormItemLayout = { ...formItemLayout, ...(item.formItemLayout || {}) };
+           item.rules = item.rules || [
+              {
+                required: false,
+              },
+           ];
+           if (item.required) {
+              item.rules = item.rules.concat({
+                required: true,
+                message: '不得为空',
+              });
+           }
+           const content = (mapTypeToUI[item.type] && mapTypeToUI[item.type](item, index, newFormItemLayout)) || null;
+           let resNode = content;
+           return <Fragment key={index}>{resNode}</Fragment>;
+         });
          return (
-             <div className={className}>
-               <Form form={form}> 
-                 {
-                     config.map((item,index) => {
-
-                        const newFormItemLayout = { ...formItemLayout, ...(item.formItemLayout || {}) };
-
-                        item.rules = item.rules || [
-                            {
-                              required: false,
-                            },
-                        ];
-                        if (item.required) {
-                            item.rules = item.rules.concat({
-                              required: true,
-                              message: '不得为空',
-                            });
-                        }
-
-                        let content = mayLayOut[item.type] && mayLayOut[item.type](item, newFormItemLayout)
-                        return <Fragment key={index}>{content}</Fragment>;
-                     })
-                 }
-               </Form>
-             </div>
+          <div className={className}>
+            <Form
+              form={form}
+            >
+              {FormItems}
+            </Form>
+          </div>
          )
      }
  }

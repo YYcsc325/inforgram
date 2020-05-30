@@ -9,14 +9,14 @@ const login = ( payload = {} ) => {
     entity: 'inforgram',
   }
 }
-const logins = (payload = {}) => {
-  return {
-    type: 'admintes/submitForm',
-    payload,
-    action: 'user',
-    entity: 'inforgram'
-  }
-}
+// const logins = (payload = {}) => {
+//   return {
+//     type: 'admintes/submitForm',
+//     payload,
+//     action: 'user',
+//     entity: 'inforgram'
+//   }
+// }
 const mapStateToProps = (state, props) => {
   return {}
 };
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     async login(value){
       const { email, passWord } = value;
-      dispatch(login({
+      return dispatch(login({
         email,
         passWord
       }));

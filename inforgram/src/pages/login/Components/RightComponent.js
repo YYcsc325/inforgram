@@ -1,18 +1,34 @@
 import React from 'react';
 import RedicretComponent from './redicret';
+import { Form, Input } from 'antd';
+import FormView from '../../../components/FormView/FormView';
+import { listConfig } from '../listConfig';
 import { mockData } from '../mockData';
-import { Form } from 'antd';
-import FormView from '../../../components/FormView/formView';
-import listConfig from '../listConfig';
+import { openNotification } from '../../../components/Notification/index';
+import Cookies from 'js-cookie'
 import '../index.less';
 
 const RightComponent = (props) => {
     const { login } = props;
     const [form] = Form.useForm();
     const handleSubmit = (form) => {
-        form.validateFields().then(values => {
+        form.validateFields().then(async values => {
             if(login){
-                login(values);
+                let res = await login(values);
+                if(res.code === 200){
+                    const { email, password } = res.result || {};
+                    Cookies.set('userLoginMesg', {
+                        email,
+                        password,
+                    },{ expires: 1 })
+                    props.history.push('/home')
+                }else{
+                    openNotification({
+                        type: 'warning',
+                        message: 'email or password error',
+                        description: '邮箱或者密码输入错误，请从新确认!'
+                    })
+                }
             }
         })
     }
@@ -34,11 +50,11 @@ const RightComponent = (props) => {
                     <div className='ls_text'>or use your email:</div>
                 </div>
                 <div>
-                <FormView 
+                  <FormView 
                     config={config}
                     className={'formViewStyle'}
                     form={form}
-                />
+                  />
                 </div>
             </div>
         </div>

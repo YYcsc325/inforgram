@@ -1,14 +1,10 @@
 import dva from 'dva';
+import RouterConfig from "./router"
+import { createBrowserHistory as createHistory } from "history"
 import './index.css';
 
-// 1. Initialize
-const app = dva({
-initialState: {
-  products: [
-    { name: 'dva', id: 1 },
-    { name: 'antd', id: 2 },
-   ],
-  },
+const app = dva({ 
+  history: createHistory(),
 });
 
 // 2. Plugins
@@ -16,10 +12,9 @@ initialState: {
 
 // 3. Model
 app.model(require('./models/admintes').default);
-app.model(require('./models/products').default);
-
+app.model(require('./models/user').default);
 // 4. Router
-app.router(require('./router').default);
+app.router(RouterConfig);
 
 // 5. Start
 app.start('#root');
