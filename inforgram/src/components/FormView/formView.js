@@ -5,7 +5,6 @@
  */
 import React, { Component, Fragment } from 'react';
 import { Select, Form, Input } from 'antd'; 
-import styles from './FormView.less'
  const Option = Select.Option;
 
  const formItemLayout = {
@@ -26,7 +25,7 @@ import styles from './FormView.less'
          }
      }
      render(){
-         const { config, className, form, layOut } = this.props;
+         const { config, className, form } = this.props;
         //  const newLayOut = formLayOut[layOut] || 'horizontal';
         //  const FormInitialValue = filterInitValue(config);
          const mapTypeToUI = {

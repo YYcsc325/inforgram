@@ -22,7 +22,7 @@ function jsonParse(strObj){
     }
 }
 export function listConfig(props){
-    const { handleSubmit, form } = props;
+    const { handleSubmit, form, setIsChecked } = props;
     const { email, password } = jsonParse(Cookies.get('userLogin')) || {};
     return [
         {
@@ -70,17 +70,7 @@ export function listConfig(props){
                 return <div className='selectCheckBox'>
                     <span style={{float: 'left'}}><Checkbox onChange={(e) => {
                         const { checked } = e.target;
-                        let Email = form.getFieldValue('email');
-                        let Password = form.getFieldValue('passWord');
-                        if(checked){
-                            Cookies.set('userLogin', {
-                                email: Email,
-                                password: Password,
-                                boxChecked: checked
-                            },{ expires: 1 })
-                        }else{
-                            Cookies.remove('userLogin')
-                        }
+                        setIsChecked(checked)
                     }}>Remember me</Checkbox></span>
                     <a>Forgot password?</a>
                 </div>

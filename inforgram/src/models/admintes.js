@@ -37,9 +37,15 @@ export default {
       return {};
     },
   },
+  // 监听页面上相应的事件，或者其它变化
+
   subscriptions: {
     setup({ dispatch, history }) {
-      
+      // 这里是监听路由变化
+
+      history.listen((location) => {
+        console.log(location, 'location')
+      })
     },
   },
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import RedicretComponent from './redicret';
 import { Form, Input } from 'antd';
 import FormView from '../../../components/FormView/FormView';
@@ -11,17 +11,19 @@ import '../index.less';
 const RightComponent = (props) => {
     const { login } = props;
     const [form] = Form.useForm();
+    const [ isChecked, setIsChecked ] = useState(false)
     const handleSubmit = (form) => {
         form.validateFields().then(async values => {
             if(login){
                 let res = await login(values);
                 if(res.code === 200){
-                    const { email, password } = res.result || {};
-                    Cookies.set('userLoginMesg', {
+                    const { email, password, login } = res.result || {};
+                    Cookies.set('userLogin', {
                         email,
                         password,
+                        login
                     },{ expires: 1 })
-                    props.history.push('/home')
+                    props.history.replace('/home')
                 }else{
                     openNotification({
                         type: 'warning',
@@ -34,6 +36,7 @@ const RightComponent = (props) => {
     }
     const config = listConfig({
         handleSubmit,
+        setIsChecked,
         form
     });
     return (

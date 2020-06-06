@@ -5,7 +5,7 @@ export default {
   namespace: 'user',
   state: {},
   effects: {
-    *fetchList({ payload, key, entity, mapData, customkey }, { call, put }) {
+    *fetchUserList({ payload, key, entity, mapData, customkey }, { call, put }) {
       const response = yield call(queryList, { ...payload, key, entity });
       yield put({
         type: 'save',
@@ -14,8 +14,6 @@ export default {
         entity,
       });
       return response;
-    },
-    *submitForm({ payload, entity, action, needSave = false }, { call, put }) {
     },
   },
   reducers: {
