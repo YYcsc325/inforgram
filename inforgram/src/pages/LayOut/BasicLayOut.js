@@ -1,27 +1,49 @@
 import React, { Component } from 'react';
-import Silder from '../Main/silder/index';
-import Header from '../Main/header/index';
-import Content from '../Main/content/index'
+import Silder from './silder/index.js';
+import Header from './header/index.js';
+import Content from './content/index.js';
+import { connect } from 'dva';
 import { Layout } from 'antd';
 import './layOut.less';
+
+@connect(
+  state => {
+      return {
+      }
+  },
+  // dispatch => {
+  //   return {}
+  // }
+)
 
 class BasicLayOut extends Component {
   constructor(props){
     super(props)
     this.state = {}
   }
+  componentDidMount(){
+    
+  }
   render(){
+    const { location } = this.props;
     return (
-      <div className="layOut">
+      <div className="layOut" key={location.key} >
         <Layout style={{height:"100vh"}}>
-            <Header />
+            <Header 
+               
+            />
             <Layout>
-              <Silder />
-              <Content />
+              <Silder 
+                 
+              />
+              <Content 
+
+              />
             </Layout>
         </Layout>
-    </div>
+      </div>
     )
   }
 }
+
 export default BasicLayOut;

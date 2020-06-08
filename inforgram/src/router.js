@@ -13,7 +13,7 @@ function jsonParse(strObj){
      return {}
   }
 }
-
+// 相当于withRouter的用法
 const ProvideRoute = ({component: Component, ...rest}) => {
   const { login } = jsonParse(Cookies.get('userLogin')) || {};
   return <Route
@@ -27,8 +27,8 @@ function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <Switch>
-        <Route path='/login' component={Login}/>
-        <Route path='/introduce' component={Introduce}/>
+        <Route path='/login' exact component={Login}/>
+        <Route path='/introduce' exact component={Introduce}/>
         <ProvideRoute path='/' component={BasicLayOut}/>
       </Switch>
     </Router>

@@ -53,7 +53,7 @@ const menuData = [
             {
                 title: '收件邮箱',
                 key: '03-02',
-                url: '/home',
+                url: '/list',
                 level: '2',
             }
         ]

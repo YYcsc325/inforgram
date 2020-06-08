@@ -3,11 +3,21 @@ import { Link } from 'react-router-dom';
 import MenuData from './mock';
 import { getTreeNode } from '../../../utils/utils'
 import { Layout, Menu, Icon } from 'antd';
+import { connect } from 'dva';
 import './index.less';
-
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
+
+@connect(
+    state => {
+        return {
+        }
+    },
+    // dispatch => {
+    //   return {}
+    // }
+)
 
 class Index extends Component {
     constructor(props) {
@@ -59,7 +69,7 @@ class Index extends Component {
                 <Menu
                   mode="inline"
                   theme='dark'
-                //   defaultOpenKeys={this.state.openKeys}
+                  defaultOpenKeys={this.state.openKeys}
                   style={{ height: '100%', borderRight: 0 }}
                   onSelect={this.checked}
                   onOpenChange={this.onOpenChange}

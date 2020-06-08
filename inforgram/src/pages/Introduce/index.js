@@ -1,14 +1,34 @@
+/**
+ * @name 介绍页面
+ * @Auth CENSHICHAO
+ */
+import React, { Component } from 'react';
 import { connect } from 'dva';
-import PageView from './view'
 
-const mapStateToProps = (state, props) => {
-    return {}
-};
-const mapDispatchToProps = (dispatch, props) => {
-    return {}
-};
-    
-export default connect(
-mapStateToProps,
-mapDispatchToProps
-)(PageView);
+
+@connect(
+    state => {
+        return {
+        }
+    },
+    // dispatch => {
+    //   return {}
+    // }
+)
+
+class Introduce extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+        }
+    }
+    render(){
+        return (
+            <div>
+                <div>我是介绍页面</div>
+            </div>
+        )
+    }
+}
+
+export default Introduce

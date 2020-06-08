@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
+import { connect } from 'dva';
 import RouterComponent from '../contentRouter/router';
 import './index.less';
 // 使Counter能获得到Redux的state，并且能发射action。先来安装react-redux
 const { Content } = Layout;
+
+@connect(
+  state => {
+      return {
+      }
+  },
+  // dispatch => {
+  //   return {}
+  // }
+)
+
 class ContentList extends Component {
   constructor(props){
     super(props)
