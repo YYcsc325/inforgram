@@ -4,12 +4,14 @@
  */
 import React, { Component } from 'react';
 import { connect } from 'dva';
-
+import Container from './dragTarget/Container';
+import CustomMove from './dragMove/Example'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 @connect(
     state => {
-        return {
-        }
+      return {}
     },
     // dispatch => {
     //   return {}
@@ -17,16 +19,22 @@ import { connect } from 'dva';
 )
 
 class Introduce extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
+
         }
     }
-    render(){
+    render() {
         return (
-            <div>
-                <div>我是介绍页面</div>
-            </div>
+			<div className="App">
+				<DndProvider backend={HTML5Backend}>
+				  <Container />
+				</DndProvider>
+                <DndProvider backend={HTML5Backend}>
+				  <CustomMove />
+				</DndProvider>
+			</div>
         )
     }
 }

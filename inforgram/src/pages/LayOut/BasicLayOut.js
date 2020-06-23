@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Silder from './silder/index.js';
 import Header from './header/index.js';
-import Content from './content/index.js';
+import { Router, Route, Switch, Link, Redirect } from 'dva/router';
 import { connect } from 'dva';
-import { Layout } from 'antd';
+import { Layout, Breadcrumb } from 'antd';
+import ProvideRoute from '../../routeConfig'
 import './layOut.less';
 
 @connect(
@@ -25,20 +26,20 @@ class BasicLayOut extends Component {
     
   }
   render(){
-    const { location } = this.props;
+    const { location, routes } = this.props;
     return (
-      <div className="layOut" key={location.key} >
+      <div className="layOut" /*key={location.key}*/ >
         <Layout style={{height:"100vh"}}>
-            <Header 
-               
-            />
+            <Header/>
             <Layout>
               <Silder 
-                 
+                 location={location}
               />
-              <Content 
-
-              />
+            <Switch>
+              {routes.map((route, i) => (
+                <ProvideRoute key={i} {...route} />
+              ))}
+            </Switch>
             </Layout>
         </Layout>
       </div>

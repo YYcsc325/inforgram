@@ -1,7 +1,7 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import RouterConfig from "./router"
-import { createBrowserHistory as createHistory } from "history";
+import { createHashHistory as createHistory } from "history";  //createBrowserHistory
 import './index.css';
 
 const SHOW = 'adloading/SHOW';

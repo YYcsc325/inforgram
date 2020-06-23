@@ -9,6 +9,28 @@ import './index.less';
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
+function findDefaultOpenKey(menuData, pathName){
+    let defaultOpenKeys = [];
+    let defaultSelectKeys = []
+    function getOpenKeys(arr, name){
+        arr.forEach(item => {
+            if(item.url === name){
+                defaultSelectKeys = [item.key]
+                defaultOpenKeys = [item.key.split('-')[0]]
+            }else{
+                if(item.children && item.children.length > 0){
+                    getOpenKeys(item.children, name)
+                }
+            }
+        });
+    }
+    getOpenKeys(menuData, pathName)
+    return {
+        defaultOpenKeys,
+        defaultSelectKeys
+    }
+}
+
 @connect(
     state => {
         return {
@@ -18,12 +40,12 @@ const { Sider } = Layout;
     //   return {}
     // }
 )
-
 class Index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            openKeys: ['01']
+            openKeys: [],
+            selectedKeys: []
         }
     }
 
@@ -40,7 +62,12 @@ class Index extends Component {
         }
     }
     checked = ( item ) => {
+        console.log(item, 'item')
         let res = getTreeNode(MenuData, [], item.key);
+        this.setState({
+            selectedKeys: item.keyPath,
+            openKeys: [item.key.split('-')[0]]
+        })
     }
     showMenu = ( obj ) => {
         const { key, icon, title} = obj;
@@ -61,19 +88,28 @@ class Index extends Component {
         )
     }
     componentDidMount() {
-
+        const { location = {} } = this.props;
+        const { pathname } = location; 
+        const { defaultOpenKeys, defaultSelectKeys } = findDefaultOpenKey(MenuData, pathname);
+        this.setState({
+            selectedKeys: defaultSelectKeys,
+            openKeys: defaultOpenKeys
+        })
     }
     render() {
+        const { openKeys = [], selectedKeys = [] } = this.state;
+        console.log(selectedKeys, openKeys, 'selectedKeys')
         return (
             <Sider width={200} style={{ background: '#fff' }}>
                 <Menu
                   mode="inline"
                   theme='dark'
-                  defaultOpenKeys={this.state.openKeys}
+                  defaultOpenKeys={['01']}
                   style={{ height: '100%', borderRight: 0 }}
                   onSelect={this.checked}
                   onOpenChange={this.onOpenChange}
-                  openKeys={this.state.openKeys}
+                  openKeys={openKeys}
+                  selectedKeys={selectedKeys}
                 >
                     {
                         MenuData.map(item => this.showMenu(item))
