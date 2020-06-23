@@ -48,7 +48,7 @@ export const Container = ({ snapToGrid }) => {
   const [, drop] = useDrop({
     accept: ItemTypes.BOX,
     drop(item, monitor) {
-
+      
       // 计算拖动元素的x,y偏移量    getClientOffset函数返回指针最后记录的偏移量
       const delta = monitor.getDifferenceFromInitialOffset();
       

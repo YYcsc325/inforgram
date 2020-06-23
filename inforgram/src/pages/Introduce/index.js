@@ -31,9 +31,9 @@ class Introduce extends Component {
 				<DndProvider backend={HTML5Backend}>
 				  <Container />
 				</DndProvider>
-                <DndProvider backend={HTML5Backend}>
+                {/* <DndProvider backend={HTML5Backend}>
 				  <CustomMove />
-				</DndProvider>
+				</DndProvider> */}
 			</div>
         )
     }

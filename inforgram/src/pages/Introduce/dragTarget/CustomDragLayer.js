@@ -6,8 +6,7 @@
 import React from 'react'
 import { useDragLayer } from 'react-dnd'
 import { ItemTypes } from './ItemTypes'
-import { Box } from './Box'
-import { snapToGrid } from './snapToGrid';
+import { ImgBox } from './ImgBox'
 
 const layerStyles = {
   position: 'fixed',
@@ -41,7 +40,7 @@ function getItemStyles(initialOffset, currentOffset, isSnapToGrid) {
 }
 
 export const CustomDragLayer = (props) => {
-
+  
   const {
     itemType,
     isDragging,
@@ -56,10 +55,12 @@ export const CustomDragLayer = (props) => {
     isDragging: monitor.isDragging(),
   }))
 
+  console.log(item, 'item')
+  
   function renderItem(itemType) {
     switch (itemType) {
       case ItemTypes.BOX:
-        return <Box title={item.title} />
+        return <ImgBox {...item} />
       default:
         return null
     }
