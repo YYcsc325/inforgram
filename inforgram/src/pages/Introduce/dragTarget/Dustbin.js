@@ -57,8 +57,8 @@ const Dustbin = (props = {}, returnRef) => {
                 moveBox(item.id, left, top)
                 return undefined
             } else {
-
-                setList([...list, { ...item, left: 0, top: 0 }])
+                let { x, y } = monitor.getClientOffset();
+                setList([...list, { ...item, isShow: true, left: x - 100, top: y - 50 }])
                 return ({ name: 'Dustbin', url })
             }
         },
@@ -67,7 +67,7 @@ const Dustbin = (props = {}, returnRef) => {
             canDrop: monitor.canDrop(),
         }),
     })
-
+    
     const isActive = canDrop && isOver;
 
     let borderColor = '#aaa';
@@ -82,7 +82,7 @@ const Dustbin = (props = {}, returnRef) => {
 
     return (
         <div ref={returnRef}>
-            <div ref={drop} style={{ ...style, borderColor, backgroundColor }}>
+            <div ref={drop} style={{ ...style }}>
                 {
                     list.map(item => {
                         return <DraggableBox key={item.id} id={item.id} {...item} />

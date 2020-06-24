@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import Container from './dragTarget/Container';
-import CustomMove from './dragMove/Example'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
@@ -31,9 +30,6 @@ class Introduce extends Component {
 				<DndProvider backend={HTML5Backend}>
 				  <Container />
 				</DndProvider>
-                {/* <DndProvider backend={HTML5Backend}>
-				  <CustomMove />
-				</DndProvider> */}
 			</div>
         )
     }

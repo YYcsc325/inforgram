@@ -15,7 +15,7 @@ let uid = 1;
 export const Box = ({ name, url }) => {
 
   const [{ isDragging }, drag] = useDrag({
-    item: { name, type: ItemTypes.BOX, url, id: ++uid},
+    item: { name, type: ItemTypes.BOX, url, id: ++uid, isShow: false},
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult()
       if (item && dropResult) {
