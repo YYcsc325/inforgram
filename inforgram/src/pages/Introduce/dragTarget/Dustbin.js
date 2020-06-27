@@ -47,7 +47,7 @@ const Dustbin = (props = {}, returnRef) => {
         accept: ItemTypes.BOX,
         drop: (item, monitor) => {
 
-            const { url, id } = item;
+            const { url, id, customType } = item;
             let isFind = list.find(keys => keys.id === id);
             if (isFind) {
                 // 计算拖动元素的x,y偏移量    getClientOffset函数返回指针最后记录的偏移量

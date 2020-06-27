@@ -6,33 +6,34 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import Container from './dragTarget/Container';
 import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import LineChart from '../../components/Chart/LineChart/view';
 
 @connect(
-    state => {
-      return {}
-    },
-    // dispatch => {
-    //   return {}
-    // }
+  state => {
+    return {}
+  },
+  // dispatch => {
+  //   return {}
+  // }
 )
 
 class Introduce extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+  constructor(props) {
+    super(props)
+    this.state = {
 
-        }
     }
-    render() {
-        return (
-			<div className="App">
-				<DndProvider backend={HTML5Backend}>
-				  <Container />
-				</DndProvider>
-			</div>
-        )
-    }
+  }
+  render() {
+    return (
+      <div className="App">
+        <DndProvider backend={HTML5Backend}>
+          <Container />
+        </DndProvider>
+      </div>
+    )
+  }
 }
 
 export default Introduce

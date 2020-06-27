@@ -7,6 +7,7 @@ import React from 'react'
 import { useDragLayer } from 'react-dnd'
 import { ItemTypes } from './ItemTypes'
 import { ImgBox } from './ImgBox'
+import LineChart from '../../../components/Chart/LineChart/view';
 
 const layerStyles = {
   position: 'fixed',
@@ -54,13 +55,13 @@ export const CustomDragLayer = (props) => {
     currentOffset: monitor.getSourceClientOffset(),
     isDragging: monitor.isDragging(),
   }))
-
-  console.log(item, 'item')
   
-  function renderItem(itemType) {
-    switch (itemType) {
-      case ItemTypes.BOX:
+  function renderItem(customType) {
+    switch (customType) {
+      case 'img':
         return <ImgBox {...item} />
+      case 'lineChart':
+        return <LineChart {...item}/>
       default:
         return null
     }
@@ -69,13 +70,13 @@ export const CustomDragLayer = (props) => {
   if (!isDragging) {
     return null
   }
-  
-  return (
+
+  return (  
     <div style={layerStyles}>
       <div
         style={getItemStyles(initialOffset, currentOffset, props.snapToGrid)}
       >
-        {renderItem(itemType)}
+        {renderItem(item.customType)}
       </div>
     </div>
   )
