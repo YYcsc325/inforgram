@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react'
 import Dustbin from './Dustbin'
 import { Box } from './Box'
-import { CustomDragLayer } from './CustomDragLayer';
 
  const Container = memo(function Container() {
 
@@ -28,8 +27,7 @@ import { CustomDragLayer } from './CustomDragLayer';
   return (
     <div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Dustbin list={list} setList={setList}/>
-        <CustomDragLayer />
+        <Dustbin list={list} setList={setList}/> 
       </div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
           {

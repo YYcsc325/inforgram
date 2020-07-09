@@ -9,7 +9,20 @@ function HomeIndex(){
     return <div>HomeIndex</div>
 }
 function List(){
-    return <div>这是List</div>
+    return <div>
+        <span style={{
+            display: 'inline-block',
+            width: '100px',
+            height: '50px',
+            background: 'pink',
+            borderRadius: '10px',
+            lineHeight: '50px',
+            textAlign: 'center',
+            color: '#fff'
+        }} onClick={() => {
+            alert('你点了杜鲁桑的按钮了')
+        }}>杜鲁桑按钮</span>
+    </div>
 }
 function jsonParse(strObj){
     try{

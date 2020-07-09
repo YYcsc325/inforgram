@@ -15,13 +15,13 @@ class LineChart extends Component {
         this.state = {}
     }
     componentDidMount() {
-        console.log('渲染了')
+        const { id } = this.props;
         const chart = new Chart({
-            container: 'c1', // 指定图表容器 ID
+            container: `c${id}`, // 指定图表容器 ID
             width: 600, // 指定图表宽度
             height: 300, // 指定图表高度
         });
-        console.log(chart, 'chart')
+   
         chart.data(data);
 
         // Step 3: 创建图形语法，绘制柱状图
@@ -31,9 +31,9 @@ class LineChart extends Component {
         chart.render();
     }
     render() {
-        const { isShow } = this.props;
+        const { id } = this.props;
         return (
-            <div id='c1' style={{display: isShow ? 'block' : 'none'}}>
+            <div id={`c${id}`}>
 
             </div>
         )

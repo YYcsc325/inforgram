@@ -1,8 +1,11 @@
-import React, { useState, forwardRef, useCallback } from 'react'
-import { useDrop } from 'react-dnd'
+import React, { useState, forwardRef, useCallback } from 'react';
+import { Rnd } from "react-rnd";
+import { useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import update from 'immutability-helper';
-import { DraggableBox } from './DraggableBox'
+import ImgBox from '../../../components/ImgBox/index';
+import LineChart from '../../../components/Chart/LineChart/view';
+import './index.less'
 
 const style = {
     height: '500px',
@@ -11,21 +14,18 @@ const style = {
     marginBottom: '1.5rem',
     color: 'white',
     padding: '1rem',
-    textAlign: 'center',
     fontSize: '1rem',
     lineHeight: 'normal',
     float: 'left',
     border: '1px solid #aaa',
-    // display: 'flex',
-    // justifyContent: 'space-around',
-    // flexWrap: 'wrap',
-    position: 'relative'
+    position: 'relative',
 }
+
 
 const Dustbin = (props = {}, returnRef) => {
 
     let { list, setList } = props;
-
+    const [id, setId] = useState(null);
     // useCallback返回一个新的函数
     const moveBox = useCallback(
         (id, left, top) => {
@@ -58,7 +58,7 @@ const Dustbin = (props = {}, returnRef) => {
                 return undefined
             } else {
                 let { x, y } = monitor.getClientOffset();
-                setList([...list, { ...item, isShow: true, left: x - 100, top: y - 50 }])
+                setList([...list, { ...item, left: x, top: y }])
                 return ({ name: 'Dustbin', url })
             }
         },
@@ -67,25 +67,48 @@ const Dustbin = (props = {}, returnRef) => {
             canDrop: monitor.canDrop(),
         }),
     })
-    
-    const isActive = canDrop && isOver;
 
-    let borderColor = '#aaa';
-    let backgroundColor = '#ddd';
-    if (isActive) {
-        borderColor = 'darkgreen';
-        backgroundColor = '#eee'
-    } else if (canDrop) {
-        borderColor = 'darkkhaki';
-        backgroundColor = '#eee'
+    const renderItem = (item) => {
+        const { customType } = item;
+        switch (customType) {
+            case 'img':
+                return <ImgBox {...item} />
+            case 'lineChart':
+                return <LineChart {...item} />
+            default:
+                return null
+        }
     }
 
     return (
-        <div ref={returnRef}>
+        <div ref={returnRef} className={'dragDustbin'}>
             <div ref={drop} style={{ ...style }}>
                 {
                     list.map(item => {
-                        return <DraggableBox key={item.id} id={item.id} {...item} />
+                        let styles = {
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }
+                        if (item.id === id) {
+                            styles.border = '1px dashed #aaa';
+                        } else {
+                            styles.border = '1px solid #ddd'
+                        }
+                        return <Rnd
+                            style={{ ...styles }}
+                            key={item.id}
+                            default={{
+                                x: item.left,
+                                y: item.top,
+                            }}
+                            // maxWidth={'800px'}
+                            onClick={() => {
+                                setId(item.id)
+                            }}
+                        >
+                            {renderItem(item)}
+                        </Rnd>
                     })
                 }
             </div>
