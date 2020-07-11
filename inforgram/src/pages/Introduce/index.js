@@ -7,7 +7,7 @@ import { connect } from 'dva';
 import Container from './dragTarget/Container';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import LineChart from '../../components/Chart/LineChart/view';
+import Preview from '../../components/Preview/index'
 
 @connect(
   state => {
@@ -31,6 +31,9 @@ class Introduce extends Component {
         <DndProvider backend={HTML5Backend}>
           <Container />
         </DndProvider>
+        <Preview 
+           customMask={(<img src={'http://img2.imgtn.bdimg.com/it/u=3313838802,2768404782&fm=26&gp=0.jpg'}/>)}
+        />
       </div>
     )
   }

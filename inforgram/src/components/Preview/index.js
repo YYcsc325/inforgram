@@ -1,7 +1,8 @@
 import { Component, Fragment } from 'react';
-import styles from './index.less';
-import { Icon, Button } from '@alipay/bigfish/antd';
+import { CloseOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import classNames from 'classnames';
+import './index.less';
 
 class Preview extends Component {
   constructor(props) {
@@ -46,14 +47,14 @@ class Preview extends Component {
         {
           finishRender
         }
-        <div className={classNames(styles.container, {
-          [styles.needShow]: !isOpen ? true : false
+        <div className={classNames('container', {
+          'needShow': !isOpen ? true : false
         })}>
-          <div className={styles.body}>
+          <div className={'body'}>
             {customMask}
           </div>
-          <div className={styles.close}>
-            <Icon type="close" onClick={() => this.totleMask(false)} />
+          <div className={'close'}>
+            <CloseOutlined onClick={() => this.totleMask(false)} />
           </div>
         </div>
       </Fragment>
