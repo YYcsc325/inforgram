@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import RedicretComponent from './redicret';
 import { Form, Input } from 'antd';
-import FormView from '../../../components/FormView/FormView';
+import FormView from '../../../components/FormView/formView';
 import { listConfig } from '../listConfig';
 import { mockData } from '../mockData';
 import { openNotification } from '../../../components/Notification/index';
