@@ -33,7 +33,7 @@ class LineChart extends Component {
     render() {
         const { id } = this.props;
         return (
-            <div id={`c${id}`}>
+            <div id={`c${id}`} style={{padding: '10px'}}>
 
             </div>
         )

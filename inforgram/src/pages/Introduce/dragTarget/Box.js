@@ -11,6 +11,7 @@ const style = {
   cursor: 'move',
   float: 'left',
 }
+
 let uid = 1;
 export const Box = ({ name, url, customType}) => {
   const [{ isDragging }, drag] = useDrag({

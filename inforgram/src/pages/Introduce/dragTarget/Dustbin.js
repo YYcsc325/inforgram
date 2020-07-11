@@ -1,10 +1,11 @@
-import React, { useState, forwardRef, useCallback } from 'react';
+import React, { useState, forwardRef, useCallback, useEffect } from 'react';
 import { Rnd } from "react-rnd";
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import update from 'immutability-helper';
 import ImgBox from '../../../components/ImgBox/index';
 import LineChart from '../../../components/Chart/LineChart/view';
+import className from 'classnames';
 import './index.less'
 
 const style = {
@@ -21,7 +22,31 @@ const style = {
     position: 'relative',
 }
 
+const spanRender = [
+    {
+        position: 'leftTop'
+    },{
+        position: 'centerTop'
+    },{
+        position: 'rightTop'
+    },{
+        position: 'leftCenter'
+    },{
+        position: 'rightCenter'
+    },{
+        position: 'leftBottom'
+    },{
+        position: 'centerBottom'
+    },{
+        position: 'rightBottom'
+    }
+]
 
+/**
+ * @name 渲染容器组件
+ * @param {*} props 
+ * @param {*} returnRef 
+ */
 const Dustbin = (props = {}, returnRef) => {
 
     let { list, setList } = props;
@@ -43,10 +68,20 @@ const Dustbin = (props = {}, returnRef) => {
         [list],
     );
 
+    // 空点击的时候去除选择元素的边框 
+    useEffect(() => {
+         document.onclick = function (e){ 
+             if(e.target.nodeName === 'DIV'){
+                setId(null)
+             }
+         }
+    });
+
+    // 放下拖拽元素的触发的事件 
     const [{ canDrop, isOver }, drop] = useDrop({
         accept: ItemTypes.BOX,
         drop: (item, monitor) => {
-
+            
             const { url, id, customType } = item;
             let isFind = list.find(keys => keys.id === id);
             if (isFind) {
@@ -68,6 +103,7 @@ const Dustbin = (props = {}, returnRef) => {
         }),
     })
 
+    // 渲染单个元素
     const renderItem = (item) => {
         const { customType } = item;
         switch (customType) {
@@ -79,34 +115,37 @@ const Dustbin = (props = {}, returnRef) => {
                 return null
         }
     }
-
+    
     return (
         <div ref={returnRef} className={'dragDustbin'}>
             <div ref={drop} style={{ ...style }}>
                 {
                     list.map(item => {
-                        let styles = {
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }
-                        if (item.id === id) {
-                            styles.border = '1px dashed #aaa';
-                        } else {
-                            styles.border = '1px solid #ddd'
-                        }
                         return <Rnd
-                            style={{ ...styles }}
                             key={item.id}
                             default={{
                                 x: item.left,
                                 y: item.top,
                             }}
-                            // maxWidth={'800px'}
+                            className={className('dragWarpClass', {
+                                'isActive': item.id === id
+                            })}
                             onClick={() => {
                                 setId(item.id)
                             }}
+                            onMouseDown={(e) => {
+                                e.preventDefault();
+                            }}
                         >
+                            {
+                                item.id === id && <div>
+                                    {
+                                        spanRender.map(item => <span className={className('defaultSpan', item.position, {
+                                            
+                                        })}></span>)
+                                    }
+                                </div>
+                            }
                             {renderItem(item)}
                         </Rnd>
                     })
