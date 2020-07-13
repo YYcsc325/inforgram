@@ -20,8 +20,8 @@ function List(){
             textAlign: 'center',
             color: '#fff'
         }} onClick={() => {
-            alert('你点了杜鲁桑的按钮了')
-        }}>杜鲁桑按钮</span>
+            alert('你点了按钮了')
+        }}>按钮</span>
     </div>
 }
 function jsonParse(strObj){
