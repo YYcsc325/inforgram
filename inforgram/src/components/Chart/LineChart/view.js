@@ -31,9 +31,14 @@ class LineChart extends Component {
         chart.render();
     }
     render() {
-        const { id } = this.props;
+        const { id, width, height } = this.props;
+        const styles = {
+            padding: '10px',
+            width: `${width - 12}px`,
+            height: `${height - 12}px`
+        }
         return (
-            <div id={`c${id}`} style={{padding: '10px'}}>
+            <div id={`c${id}`} style={{ ...styles }}>
 
             </div>
         )

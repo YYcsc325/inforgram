@@ -15,7 +15,7 @@ const style = {
 let uid = 1;
 export const Box = ({ name, url, customType}) => {
   const [{ isDragging }, drag] = useDrag({
-    item: { name, type: ItemTypes.BOX, url, id: ++uid, customType, isShow: false},
+    item: { name, type: ItemTypes.BOX, url, id: ++uid, customType },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult()
       if (item && dropResult) {

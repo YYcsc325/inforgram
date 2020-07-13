@@ -6,7 +6,7 @@ import DragRnd from '../../../components/DragRnd/index'
 import './index.less'
 
 const style = {
-    height: '700px',
+    height: '800px',
     width: '100%',
     color: 'white',
     fontSize: '1rem',
@@ -24,6 +24,22 @@ const Dustbin = (props = {}, returnRef) => {
 
     let { list, setList } = props;
     const [id, setId] = useState(null);
+    // useCallback返回一个新的函数
+    const moveBox = useCallback(
+        (id, left, top) => {
+            let targetIndex = list.findIndex(item => item.id === id);
+
+            // updates返回计算过之后的boxes的值, 对应的left，top
+            setList(
+                update(list, {
+                    [targetIndex]: {
+                        $merge: { left, top },
+                    },
+                }),
+            )
+        },
+        [list],
+    );
 
     // 空点击的时候去除选择元素的边框 
     useEffect(() => {
@@ -41,13 +57,18 @@ const Dustbin = (props = {}, returnRef) => {
             
             const { id } = item;
             let isFind = list.find(keys => keys.id === id);
-
-            // 如果没找到就是添加一个新元素
-            if (!isFind) {
+            if (isFind) {
+                // 计算拖动元素的x,y偏移量    getClientOffset函数返回指针最后记录的偏移量
+                const delta = monitor.getDifferenceFromInitialOffset();
+                let left = Math.round(item.left + delta.x)
+                let top = Math.round(item.top + delta.y)
+                moveBox(item.id, left, top)
+                return undefined
+            } else {
                 let { x, y } = monitor.getClientOffset();
                 setList([...list, { ...item, left: x, top: y }])
+                return ({ name: 'Dustbin' })
             }
-            return ({...item})
         },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
@@ -66,7 +87,6 @@ const Dustbin = (props = {}, returnRef) => {
                     })
                 }
             </div>
-            
         </div>
 
     )
