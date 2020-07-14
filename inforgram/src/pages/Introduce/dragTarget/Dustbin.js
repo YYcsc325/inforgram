@@ -6,7 +6,7 @@ import DragRnd from '../../../components/DragRnd/index'
 import './index.less'
 
 const style = {
-    height: '700px',
+    height: '600px',
     width: '100%',
     color: 'white',
     fontSize: '1rem',

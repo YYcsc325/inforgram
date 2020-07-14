@@ -31,9 +31,9 @@ class DragRnd extends Component {
         super(props);
         const { width, height, left, top } = props;
         this.state = {
-            width: width || 400,
+            width: width || 550,
             height: height || 400,
-            x: left - (width || 200 ),
+            x: left - (width || 225 ),
             y: top - (height || 200)
         }
     }
@@ -59,8 +59,6 @@ class DragRnd extends Component {
                     this.setState({ x: d.x, y: d.y })
                 }}
                 onResize={(e, direction, ref, delta, position) => {
-                    console.log(ref.offsetWidth, 'ref.offsetWidth');
-                    console.log(ref.offsetHeight, 'ref.offsetHeight')
                     this.setState({
                         width: ref.offsetWidth,
                         height: ref.offsetHeight,
