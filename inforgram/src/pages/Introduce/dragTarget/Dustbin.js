@@ -66,7 +66,7 @@ const Dustbin = (props = {}, returnRef) => {
                     })
                 }
             </div>
-            
+            {/* 这里需要canvas的帮助 */}
         </div>
 
     )
