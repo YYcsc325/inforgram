@@ -25,7 +25,7 @@ const renderItem = (item) => {
             return null
     }
 }
-
+function noFunc(){}
 class DragRnd extends Component {
     constructor(props) {
         super(props);
@@ -33,14 +33,35 @@ class DragRnd extends Component {
         this.state = {
             width: width || 550,
             height: height || 400,
-            x: left - (width || 225 ),
+            x: left - (width || 225),
             y: top - (height || 200)
         }
     }
+
+    // 初始化记录4个角的坐标
+    // componentDidMount(){
+    //     const { setAllPosition = noFunc, id, allPosition = {}, width, height, left, top } = this.props;
+    //     setAllPosition({
+    //         ...allPosition,
+    //         [id]: {
+    //             left: left,
+    //             top: top,
+    //             right: left + (width || 550),
+    //             bottom: top + (height || 400)
+    //         }
+    //     })
+    // }
+    
     render() {
         const { width, height, x, y } = this.state;
-        const { id, onHandleClick = () => {}, clickId = '' } = this.props;
-        
+        const {
+            id,
+            onHandleClick = noFunc,
+            clickId = '',
+            setAllPosition = noFunc,
+            allPosition = {}
+        } = this.props;
+        console.log(allPosition, 'allPosition')
         return (
             <Rnd
                 key={id}
@@ -55,16 +76,41 @@ class DragRnd extends Component {
                 onMouseDown={(e) => {
                     e.preventDefault();
                 }}
+                onDrag={(e, d) => {
+
+                    // 拖动的时候记录4个点的位置
+                    setAllPosition({
+                        ...allPosition, [id]: {
+                            left: d.x,
+                            top: d.y,
+                            right: d.x + width,
+                            bottom: d.y + height
+                        }
+                    })
+                }}
                 onDragStop={(e, d) => {
                     this.setState({ x: d.x, y: d.y })
                 }}
                 onResize={(e, direction, ref, delta, position) => {
+
+                    const { offsetWidth, offsetHeight } = ref;
+                    const { x, y } = position;
+                    // 缩放的时候记录4个点的位置
+                    setAllPosition({
+                        ...allPosition, [id]: {
+                            left: x,
+                            top: y,
+                            right: x + offsetWidth,
+                            bottom: y + offsetHeight
+                        }
+                    })
                     this.setState({
-                        width: ref.offsetWidth,
-                        height: ref.offsetHeight,
+                        width: offsetWidth,
+                        height: offsetHeight,
                         ...position,
                     });
                 }}
+
             >
                 {
                     clickId === id && <div>

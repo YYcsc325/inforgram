@@ -23,8 +23,8 @@ const style = {
 const Dustbin = (props = {}, returnRef) => {
 
     let { list, setList } = props;
-    const [id, setId] = useState(null);
-
+    const [ id, setId ] = useState(null);
+    const [ allPosition, setAllPosition ] = useState({});
     // 空点击的时候去除选择元素的边框 
     useEffect(() => {
          document.onclick = function (e){ 
@@ -62,7 +62,7 @@ const Dustbin = (props = {}, returnRef) => {
             <div ref={drop} style={{ ...style }}>
                 {
                     list.map(item => {
-                        return <DragRnd {...item} onHandleClick={handleClick} clickId={id}/>
+                        return <DragRnd {...item} onHandleClick={handleClick} clickId={id} setAllPosition={setAllPosition} allPosition={allPosition}/>
                     })
                 }
             </div>
