@@ -2,7 +2,8 @@ import React, { useState, forwardRef, useCallback, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import update from 'immutability-helper';
-import DragRnd from '../../../components/DragRnd/index'
+import DragRnd from '../../../components/DragRnd/index';
+import DragCanvas from './DragCanvas'
 import './index.less'
 
 const style = {
@@ -23,22 +24,22 @@ const style = {
 const Dustbin = (props = {}, returnRef) => {
 
     let { list, setList } = props;
-    const [ id, setId ] = useState(null);
-    const [ allPosition, setAllPosition ] = useState({});
+    const [id, setId] = useState(null);
+    const [allPosition, setAllPosition] = useState({});
     // 空点击的时候去除选择元素的边框 
     useEffect(() => {
-         document.onclick = function (e){ 
-             if(e.target.nodeName === 'DIV'){
+        document.onclick = function (e) {
+            if (e.target.nodeName === 'DIV' || e.target.nodeName === 'CANVAS') {
                 setId(null)
-             }
-         }
+            }
+        }
     });
 
     // 放下拖拽元素的触发的事件 
     const [{ canDrop, isOver }, drop] = useDrop({
         accept: ItemTypes.BOX,
         drop: (item, monitor) => {
-            
+
             const { id } = item;
             let isFind = list.find(keys => keys.id === id);
 
@@ -47,26 +48,27 @@ const Dustbin = (props = {}, returnRef) => {
                 let { x, y } = monitor.getClientOffset();
                 setList([...list, { ...item, left: x, top: y }])
             }
-            return ({...item})
+            return ({ ...item })
         },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
         }),
-    }) 
+    })
     const handleClick = (id) => {
         setId(id)
     }
+
     return (
         <div ref={returnRef} className={'dragDustbin'}>
-            <div ref={drop} style={{ ...style }}>
+            <div ref={drop} style={{ ...style }} className={'content'}>
+                <DragCanvas allPosition={allPosition}/>
                 {
                     list.map(item => {
-                        return <DragRnd {...item} onHandleClick={handleClick} clickId={id} setAllPosition={setAllPosition} allPosition={allPosition}/>
+                        return <DragRnd {...item} onHandleClick={handleClick} clickId={id} setAllPosition={setAllPosition} allPosition={allPosition} />
                     })
                 }
             </div>
-            {/* 这里需要canvas的帮助 */}
         </div>
 
     )

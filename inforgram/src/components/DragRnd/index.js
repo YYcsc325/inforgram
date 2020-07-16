@@ -61,7 +61,7 @@ class DragRnd extends Component {
             setAllPosition = noFunc,
             allPosition = {}
         } = this.props;
-        console.log(allPosition, 'allPosition')
+        
         return (
             <Rnd
                 key={id}
