@@ -3,9 +3,10 @@
  * @auth  CENSHICHAO
  * @param { props , id必须 }
  * @description 渲染单个元素 
+ * @description { 性能缺点，onDrag, onResize的时候一直触发事件会很卡 }
  */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ImgBox from '../ImgBox/index';
 import LineChart from '../Chart/LineChart/view';
 import { spanRender } from './position';
@@ -26,7 +27,7 @@ const renderItem = (item) => {
     }
 }
 function noFunc(){}
-class DragRnd extends Component {
+class DragRnd extends PureComponent {
     constructor(props) {
         super(props);
         const { width, height, left, top } = props;
@@ -51,17 +52,21 @@ class DragRnd extends Component {
     //         }
     //     })
     // }
-    
+    componentWillReceiveProps(nextProps){
+        const { onHandleClick } = this.props;
+        const { clickId } = nextProps;
+        onHandleClick(clickId)
+    }
     render() {
         const { width, height, x, y } = this.state;
         const {
             id,
-            onHandleClick = noFunc,
             clickId = '',
+            allPosition = {},
+            onHandleClick = noFunc,
             setAllPosition = noFunc,
-            allPosition = {}
         } = this.props;
-        
+
         return (
             <Rnd
                 key={id}
@@ -77,14 +82,14 @@ class DragRnd extends Component {
                     e.preventDefault();
                 }}
                 onDrag={(e, d) => {
-
                     // 拖动的时候记录4个点的位置
                     setAllPosition({
                         ...allPosition, [id]: {
                             left: d.x,
                             top: d.y,
                             right: d.x + width,
-                            bottom: d.y + height
+                            bottom: d.y + height,
+                            id: id
                         }
                     })
                 }}
@@ -92,7 +97,6 @@ class DragRnd extends Component {
                     this.setState({ x: d.x, y: d.y })
                 }}
                 onResize={(e, direction, ref, delta, position) => {
-
                     const { offsetWidth, offsetHeight } = ref;
                     const { x, y } = position;
                     // 缩放的时候记录4个点的位置
@@ -101,7 +105,8 @@ class DragRnd extends Component {
                             left: x,
                             top: y,
                             right: x + offsetWidth,
-                            bottom: y + offsetHeight
+                            bottom: y + offsetHeight,
+                            id: id
                         }
                     })
                     this.setState({

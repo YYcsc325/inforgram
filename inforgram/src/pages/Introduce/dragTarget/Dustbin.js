@@ -1,20 +1,9 @@
 import React, { useState, forwardRef, useCallback, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
-import update from 'immutability-helper';
 import DragRnd from '../../../components/DragRnd/index';
 import DragCanvas from './DragCanvas'
 import './index.less'
-
-const style = {
-    height: '600px',
-    width: '100%',
-    color: 'white',
-    fontSize: '1rem',
-    lineHeight: 'normal',
-    border: '1px solid #aaa',
-    position: 'relative',
-}
 
 /**
  * @name 渲染容器组件
@@ -23,14 +12,15 @@ const style = {
  */
 const Dustbin = (props = {}, returnRef) => {
 
-    let { list, setList } = props;
-    const [id, setId] = useState(null);
+    const [clickId, setClickId] = useState(null);
+    const [list, setList] = useState([])
     const [allPosition, setAllPosition] = useState({});
+
     // 空点击的时候去除选择元素的边框 
     useEffect(() => {
         document.onclick = function (e) {
-            if (e.target.nodeName === 'DIV' || e.target.nodeName === 'CANVAS') {
-                setId(null)
+            if (e.target.nodeName === 'DIV') {
+                setClickId(null)
             }
         }
     });
@@ -45,7 +35,7 @@ const Dustbin = (props = {}, returnRef) => {
 
             // 如果没找到就是添加一个新元素
             if (!isFind) {
-                let { x, y } = monitor.getClientOffset();
+                let { x, y } = monitor.getClientOffset();     // 获取位置有点问题
                 setList([...list, { ...item, left: x, top: y }])
             }
             return ({ ...item })
@@ -55,22 +45,30 @@ const Dustbin = (props = {}, returnRef) => {
             canDrop: monitor.canDrop(),
         }),
     })
-    const handleClick = (id) => {
-        setId(id)
-    }
 
+    const handleClick = (id) => {
+        setClickId(id)
+    }
+    
     return (
-        <div ref={returnRef} className={'dragDustbin'}>
-            <div ref={drop} style={{ ...style }} className={'content'}>
-                <DragCanvas allPosition={allPosition}/>
+        <div ref={returnRef} className={'dragDustbin'} >
+            <DragCanvas allPosition={allPosition} clickId={clickId}/>
+            <div ref={drop} className={'content'}>
                 {
                     list.map(item => {
-                        return <DragRnd {...item} onHandleClick={handleClick} clickId={id} setAllPosition={setAllPosition} allPosition={allPosition} />
+                        return (
+                            <DragRnd
+                                {...item}
+                                clickId={clickId}
+                                allPosition={allPosition}
+                                onHandleClick={handleClick}
+                                setAllPosition={setAllPosition}
+                            />
+                        )
                     })
                 }
             </div>
         </div>
-
     )
 }
 export default forwardRef(Dustbin)

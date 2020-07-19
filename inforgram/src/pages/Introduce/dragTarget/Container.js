@@ -1,11 +1,10 @@
 import React, { memo, useState } from 'react';
-import './index.less'
+import DragCanvas from './DragCanvas'
 import Dustbin from './Dustbin'
 import { Box } from './Box'
+import './index.less'
 
  const Container = memo(function Container() {
-
-  let [list, setList] = useState([]);
 
   let imgList = [
       {
@@ -26,18 +25,15 @@ import { Box } from './Box'
   ];
 
   return (
-    <div>
-      <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Dustbin list={list} setList={setList}/> 
+    <div className={'dragMain'}>
+      <div>
+        <Dustbin/> 
       </div>
-      <div style={{ overflow: 'hidden', clear: 'both' }}>
+      <div>
           {
               imgList.map(item => <Box {...item} />)
           }
       </div>
-      <a onClick={() => {
-          setList([])
-      }}>点击清空图片</a>
     </div>
   )
 })
