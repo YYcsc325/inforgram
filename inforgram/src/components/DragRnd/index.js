@@ -52,16 +52,12 @@ class DragRnd extends PureComponent {
     //         }
     //     })
     // }
-    componentWillReceiveProps(nextProps){
-        const { onHandleClick } = this.props;
-        const { clickId } = nextProps;
-        onHandleClick(clickId)
-    }
     render() {
         const { width, height, x, y } = this.state;
+
         const {
             id,
-            clickId = '',
+            isActive = false,
             allPosition = {},
             onHandleClick = noFunc,
             setAllPosition = noFunc,
@@ -73,13 +69,11 @@ class DragRnd extends PureComponent {
                 size={{ width: width, height: height }}
                 position={{ x: x, y: y }}
                 className={className('dragWarpClass', {
-                    'isActive': clickId === id
+                    'isActive': isActive
                 })}
-                onClick={() => {
-                    onHandleClick(id)
-                }}
                 onMouseDown={(e) => {
                     e.preventDefault();
+                    onHandleClick(id)
                 }}
                 onDrag={(e, d) => {
                     // 拖动的时候记录4个点的位置
@@ -117,13 +111,13 @@ class DragRnd extends PureComponent {
                 }}
 
             >
-                {
-                    clickId === id && <div>
+                {/* {
+                    isActive && <div>
                         {
                             spanRender.map(item => <span className={className('defaultSpan', item.position)} key={item.position}></span>)
                         }
                     </div>
-                }
+                } */}
                 <div style={{ width: '100%', height: '100%' }}>
                     {renderItem({ ...this.props, width, height })}
                 </div>

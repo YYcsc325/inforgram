@@ -12,9 +12,9 @@ import './index.less'
  */
 const Dustbin = (props = {}, returnRef) => {
 
-    const [clickId, setClickId] = useState(null);
-    const [list, setList] = useState([])
-    const [allPosition, setAllPosition] = useState({});
+    const [ clickId, setClickId ] = useState(null);
+    const [ list, setList ] = useState([])
+    const [ allPosition, setAllPosition ] = useState({});
 
     // 空点击的时候去除选择元素的边框 
     useEffect(() => {
@@ -49,17 +49,18 @@ const Dustbin = (props = {}, returnRef) => {
     const handleClick = (id) => {
         setClickId(id)
     }
-    
+
     return (
         <div ref={returnRef} className={'dragDustbin'} >
-            <DragCanvas allPosition={allPosition} clickId={clickId}/>
+            <DragCanvas allPosition={allPosition} clickId={clickId} />
             <div ref={drop} className={'content'}>
                 {
                     list.map(item => {
+                        const { id } = item;
                         return (
                             <DragRnd
                                 {...item}
-                                clickId={clickId}
+                                isActive={clickId === id}
                                 allPosition={allPosition}
                                 onHandleClick={handleClick}
                                 setAllPosition={setAllPosition}
