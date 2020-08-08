@@ -32,6 +32,8 @@ const RightComponent = (props) => {
                     })
                 }
             }
+        }).catch(err => {
+            console.log(err)
         })
     }
     const config = listConfig({

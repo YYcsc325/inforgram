@@ -1,17 +1,18 @@
 /**
  * @name 配置文件
  */
-import { getBaseConfig } from './baseConfig.js'
+import { getBaseConfig } from './baseConfig.js';
+import HooksComponent from './Component/HooksComponent';
 import React from 'react';
 
-export function getConfig(props){
-    const baseConfig = getBaseConfig.call(this);
+export function getConfig(props, onChange) {
+    const baseConfig = getBaseConfig(props);
     return [
         {
             type: 'select',
             label: '选择框',
             key: 'select',
-            options: [{key: '123', value: '123'}],
+            options: [{ key: '123', value: '123' }],
             rules: [
                 {
                     required: true,
@@ -22,39 +23,52 @@ export function getConfig(props){
             placeholder: '请选择'
         }
     ]
-    .concat(
-        [
-            {
-                ...baseConfig.input,
-                disabled: false,
-                onChange: (e) => {
-                    this.onChange(e)
-                }
-            }   
-        ]
-    ).concat(
-        [
-            {
-                ...baseConfig.custom
-            }
-        ]
-    ).concat(
-        [
-            {
-                ...baseConfig.double,
-                options: [
-                    {
-                        key: '111',
-                        value: '111'
-                    },
-                    {
-                        key: '222',
-                        value: '222'
+        .concat(
+            [
+                {
+                    ...baseConfig.input,
+                    disabled: false,
+                    onChange: (e) => {
+                        onChange(e)
                     }
-                ],
-                valueDateOne: '111',
-                valueDataTwo: '111'
-            }
-        ]
-    )
+                }
+            ]
+        ).concat(
+            [
+                {
+                    ...baseConfig.custom
+                }
+            ]
+        ).concat(
+            [
+                {
+                    ...baseConfig.double,
+                    options: [
+                        {
+                            key: '111',
+                            value: '111'
+                        },
+                        {
+                            key: '222',
+                            value: '222'
+                        }
+                    ],
+                    valueDateOne: '111',
+                    valueDataTwo: '111'
+                }
+            ]
+        ).concat(
+            [
+                {
+                    type: 'custom',
+                    label: 'hooks的用例',
+                    key: 'useCallback',
+                    render: () => {
+                        return (
+                            <HooksComponent />
+                        )
+                    }
+                }
+            ]
+        )
 }

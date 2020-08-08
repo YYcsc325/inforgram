@@ -10,6 +10,7 @@ const login = ( payload = {} ) => {
     entity: 'inforgram',
   }
 }
+
 // const logins = (payload = {}) => {
 //   return {
 //     type: 'admintes/submitForm',
@@ -18,6 +19,7 @@ const login = ( payload = {} ) => {
 //     entity: 'inforgram'
 //   }
 // }
+
 const mapStateToProps = (state, props) => {
   return {
     loginLoading: getIn(state, ['adloading', 'user', 'inforgram', 'user'], false)

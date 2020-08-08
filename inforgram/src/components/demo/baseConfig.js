@@ -2,11 +2,11 @@
  * @name 公共配置文件
  */
 import React from 'react';
-import SelectInput from './selectInput.js';
+import SelectInput from './Component/SelectInput';
 import TrafficScenario from '../TrafficScenario/index'
 
 export function getBaseConfig(props){
-    const { form } = this.props;
+
     return {
         input: {
             key: 'input',
@@ -36,34 +36,34 @@ export function getBaseConfig(props){
                 return <span>我是自定义渲染的</span>
             }
         },
-        double: {
-            type:'custom',
-            key: 'doubleCustom',
-            label: '映射两个字段',
-            render: (config) => {
-                const { valueDateOne, valueDataTwo, disabled, options = []} = config;
-                return form.getFieldDecorator('doubleCustom',{
-                    rules: [
-                        {
-                            validator: (rule, value = {}, callback) => {
-                                callback();
-                            }
-                        }
-                    ],
-                    initialValue: {
-                        valueDateOne: valueDateOne,
-                        valueDataTwo: valueDataTwo
-                    }
-                })(
-                    <SelectInput 
-                        options={options}
-                        disabled={disabled || false}
-                        onChange={(value)=>{
-                            console.log(value)
-                        }}
-                    />
-                )
-            }
-        }
+        // double: {
+        //     type:'custom',
+        //     key: 'doubleCustom',
+        //     label: '映射两个字段',
+        //     render: (config) => {
+        //         const { valueDateOne, valueDataTwo, disabled, options = []} = config;
+        //         return form.getFieldDecorator('doubleCustom',{
+        //             rules: [
+        //                 {
+        //                     validator: (rule, value = {}, callback) => {
+        //                         callback();
+        //                     }
+        //                 }
+        //             ],
+        //             initialValue: {
+        //                 valueDateOne: valueDateOne,
+        //                 valueDataTwo: valueDataTwo
+        //             }
+        //         })(
+        //             <SelectInput 
+        //                 options={options}
+        //                 disabled={disabled || false}
+        //                 onChange={(value)=>{
+        //                     console.log(value)
+        //                 }}
+        //             />
+        //         )
+        //     }
+        // }
     }
 }

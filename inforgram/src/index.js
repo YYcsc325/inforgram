@@ -12,7 +12,7 @@ const app = dva({
   // 每次异步请求都会触发这个钩子 - （对每个异步请求做loading处理）
 
   onEffect: function onEffect(effect, { put }, model, actionType ) {
-    const { namespace } = model
+    const { namespace } = model;
     return function*(...args) {
       const [{ key, entity, action }] = args;
       yield put({ type: SHOW, payload: { namespace, actionType, action, entity, key } });

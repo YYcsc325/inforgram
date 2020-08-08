@@ -1,9 +1,19 @@
+/**
+ * @name 获取list最大值
+ * @param {*} arr 
+ */
 function Max(arr){
     return Math.max(...arr)
 }
+
+/**
+ * @name 获取list最小值
+ * @param {*} arr 
+ */
 function Min(arr = []){
     return Math.min(...arr)
 }
+
 /**
  * @name 返回数组最大最小值
  * @param {*} target 拖拽目标元素
@@ -18,7 +28,7 @@ export function getMaxMin( target, arr = [], position = {}, x, y ){
         list.push(position[key][y]);
     })
     list.push(target[x]);
-    list.push(target[y])
+    list.push(target[y]);
     return {
         min: Min(list),
         max: Max(list)
