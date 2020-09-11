@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MainComponent from './MainComponent.js'
+import MainComponent from './formConfig/MainComponent.js';
 
 class Index extends Component {
     constructor(props){

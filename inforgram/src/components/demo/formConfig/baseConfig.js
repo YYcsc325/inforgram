@@ -2,15 +2,15 @@
  * @name 公共配置文件
  */
 import React from 'react';
-import SelectInput from './Component/SelectInput';
-import TrafficScenario from '../TrafficScenario/index'
+import SelectInput from '../Component/SelectInput';
+import TrafficScenario from '../../TrafficScenario/index'
 
 export function getBaseConfig(props){
 
     return {
         input: {
             key: 'input',
-            type: 'input',
+            type: 'input11',
             label: '输入框',
             rules: [
                 {

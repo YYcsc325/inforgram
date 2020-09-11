@@ -1,9 +1,11 @@
 /**
  * @name 配置文件
  */
-import { getBaseConfig } from './baseConfig.js';
-import HooksComponent from './Component/HooksComponent';
 import React from 'react';
+
+import { getBaseConfig } from './baseConfig.js';
+import HooksComponent from '../Component/HooksComponent';
+
 
 export function getConfig(props, onChange) {
     const baseConfig = getBaseConfig(props);
@@ -11,7 +13,7 @@ export function getConfig(props, onChange) {
         {
             type: 'select',
             label: '选择框',
-            key: 'select',
+            key: 'select11',
             options: [{ key: '123', value: '123' }],
             rules: [
                 {

@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'antd';
-import FormView from '../FormView/formView'
+import FormView from '../../FormView/formView'
 import { getConfig } from './config.js';
-import { debounce } from '../../utils/utils'
-import StaticModal from '../StaticModal/view';
-
+import { debounce } from '../../../utils/utils'
+import StaticModal from '../../StaticModal/view';
+import NewFormView from '../../NewFormView/FormView';
+import newFormConfig from './newFormConfig';
 
 const getshow = StaticModal.getshow;
 
-
 const Index = (props = {}) => {
 
-    const [visible, setVisable] = useState(false);
     const [form] = Form.useForm();
+    const [changeKeys, setChangeKeys] = useState([])
 
     const getName = (target) => {
         let text = /^[1-9]\d*$/;
@@ -40,28 +40,31 @@ const Index = (props = {}) => {
     }
 
     const openModal = () => {
-        getshow();
-        setVisable(true)
-    }
-    const checkModal = () => {
-        setVisable(false)
+        const modal = StaticModal.showModal({
+            destroy: () => {
+                modal.destroy();
+            }
+        });
     }
 
     const config = getConfig(props, onChange);
-
+    const newConfig = newFormConfig({ setChangeKeys }).filter(item => !changeKeys.includes(item.name));
+    
     return (
         <div>
-            <FormView
+            {/* <FormView
                 config={config}
                 className={'csc'}
                 form={form}
+            /> */}
+            <NewFormView 
+               form={form}
+               formProps={{
+                 layout: 'horizontal',
+               }}
+               config={newConfig}
             />
             <Button onClick={() => { handleSubmit() }}>点击提交</Button>
-            <StaticModal
-                visible={visible}
-                onCancel={checkModal}
-                onOk={checkModal}
-            />
             <Button onClick={() => { openModal() }}>点击打开模态框</Button>
         </div>
     )
