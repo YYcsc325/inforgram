@@ -15,6 +15,11 @@ export default function ({ setChangeKeys }) {
             width: 500,
           },
         },
+        suffix: (data) => {
+          return <span style={{marginLeft: '10px', cursor: 'pointer'}} onClick={() => {
+            console.log(data, 'data');
+          }}>后缀</span>
+        },
         initialValue: '123',
       },
       {
@@ -92,8 +97,11 @@ export default function ({ setChangeKeys }) {
         rules: [{required: true, message: '必填'}],
         label: '测试InputNumber',
         itemProps: {
-          onChange: (data, val) => {}
+          onChange: (data, val) => {
+            console.log(data, val, 'val')
+          },
         },
+        initialValue: 123,
       },
       {
         type: 'Radio',

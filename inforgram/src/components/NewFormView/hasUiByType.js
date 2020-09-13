@@ -65,7 +65,7 @@ function processingObj(item = {}, todo){
  */
 function formItemWarp(item = {}, Element ) {
   const returnValue = processingObj(item, 'implement');
-  const { itemProps } = returnValue;
+  const { itemProps, suffix } = returnValue;
 
   // itemProps内配置的函数一律绑定form -> processingObj函数处理
   let newItemProps = {...itemProps};
@@ -78,6 +78,7 @@ function formItemWarp(item = {}, Element ) {
   return (
     <FormItem {...{ ...formItemLayout, ...returnValue }} key={returnValue.name}>
       <Element { ...newItemProps } />
+      {suffix}
     </FormItem>
   );
 }
