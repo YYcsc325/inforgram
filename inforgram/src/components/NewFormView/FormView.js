@@ -10,7 +10,7 @@ class FormView extends React.Component {
     return (
       <Form { ...{ ...formProps, form }}>
         <div className={styles[formClassName] || styles.container}>
-          {config.map(item => hasUiByType({ form, ...item })).filter(item => !!item)}
+          {config.map((item) => hasUiByType({ form, ...item })).filter(item => !!item)}
         </div>
       </Form>
     )

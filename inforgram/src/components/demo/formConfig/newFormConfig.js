@@ -1,6 +1,8 @@
 /**
  * @name 配置层
  */
+import TextInput from '../Component/TextInput';
+
 export default function ({ setChangeKeys }) {
     return [
       {
@@ -14,11 +16,6 @@ export default function ({ setChangeKeys }) {
           style: {
             width: 500,
           },
-        },
-        suffix: (data) => {
-          return <span style={{marginLeft: '10px', cursor: 'pointer'}} onClick={() => {
-            console.log(data, 'data');
-          }}>后缀</span>
         },
         initialValue: '123',
       },
@@ -177,6 +174,34 @@ export default function ({ setChangeKeys }) {
             <div>
               自定义渲染
             </div>
+          )
+        }
+      },
+      {
+        type: 'Input',
+        name: 'textInput',
+        label: '输入组件',
+        node: ({ value, onChange }) => {
+          return (
+            <TextInput
+               value={value}
+               onChange={onChange}
+               style={{width: '300px'}}
+            />
+          )
+        }
+      },
+      {
+        type: 'Input',
+        name: 'textInput2',
+        label: '输入组件2',
+        node: ({ value, onChange }) => {
+          return (
+            <TextInput
+               value={value}
+               onChange={onChange}
+               style={{width: '300px'}}
+            />
           )
         }
       }

@@ -42,7 +42,7 @@ const formItemLayout = {
  * @param { item, TODO }
  */
 function processingObj(item = {}, todo){
-  let newItem = {...item};
+  const newItem = {...item};
   for( const key in item ){
     if(isFunc(item[key]) && Object.prototype.hasOwnProperty.call(item, key)){
       if(todo === 'implement'){
@@ -61,11 +61,11 @@ function processingObj(item = {}, todo){
  * @name        包裹formItem
  * @param       { item }
  * @return      FormItemComponent
- * @description 返回被formItem包裹之后的组件
+ * @description 返回被formItem包裹之后的组件   -   (关联connect外部传入props属性这里在bind透穿一下)
  */
 function formItemWarp(item = {}, Element ) {
   const returnValue = processingObj(item, 'implement');
-  const { itemProps, suffix } = returnValue;
+  const { itemProps } = returnValue;
 
   // itemProps内配置的函数一律绑定form -> processingObj函数处理
   let newItemProps = {...itemProps};
@@ -78,7 +78,6 @@ function formItemWarp(item = {}, Element ) {
   return (
     <FormItem {...{ ...formItemLayout, ...returnValue }} key={returnValue.name}>
       <Element { ...newItemProps } />
-      {suffix}
     </FormItem>
   );
 }
