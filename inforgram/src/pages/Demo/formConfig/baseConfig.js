@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import SelectInput from '../Component/SelectInput';
-import TrafficScenario from '../../TrafficScenario/index'
+import TrafficScenario from '../../../components/TrafficScenario/index'
 
 export function getBaseConfig(props){
 

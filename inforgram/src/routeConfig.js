@@ -38,7 +38,7 @@ const ProvideRoute = ({component: Component, path, routes, ...rest}) => {
     return <Route
             path={path}
             render = {props => {
-                return true ? <Component {...props} routes={routes}/> : <Redirect to='/login' />
+                return login ? <Component {...props} routes={routes}/> : <Redirect to='/login' />
             }}
         />
 }

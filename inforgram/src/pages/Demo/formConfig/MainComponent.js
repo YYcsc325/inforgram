@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'antd';
-import FormView from '../../FormView/formView'
+import FormView from '../../../components/FormView/formView'
 import { getConfig } from './config.js';
 import { debounce } from '../../../utils/utils'
-import StaticModal from '../../StaticModal/view';
-import NewFormView from '../../NewFormView/FormView';
+import StaticModal from '../../../components/StaticModal/view';
+import NewFormView from '../../../components/NewFormView/FormView';
 import newFormConfig from './newFormConfig';
 
 const getshow = StaticModal.getshow;
