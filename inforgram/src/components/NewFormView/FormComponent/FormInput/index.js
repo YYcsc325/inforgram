@@ -1,12 +1,9 @@
 import { Input } from 'antd';
-import React, { forwardRef } from 'react';
+import React from 'react';
 
-const FormInput = (props = {}, ref) => {
+const FormInput = (props = {}) => {
   return (
-    <Input
-      {...props}
-      ref={ref}
-    />
+    <Input {...props} />
   )
 }
-export default forwardRef(FormInput);
+export default FormInput;

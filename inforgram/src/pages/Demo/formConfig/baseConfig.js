@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import SelectInput from '../Component/SelectInput';
-import TrafficScenario from '../../../components/TrafficScenario/index'
 
 export function getBaseConfig(props){
 
@@ -19,14 +18,6 @@ export function getBaseConfig(props){
                 }
             ],
             placeholder: '请输入'
-        },
-        custom: {
-            type:'custom',
-            key: 'trafficScenario',
-            label: '流量场景',
-            render: () => {
-                return <TrafficScenario />
-            }
         },
         custom: {
             type:'custom',

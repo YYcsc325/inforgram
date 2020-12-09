@@ -2,8 +2,6 @@ import { Route, Redirect } from 'dva/router';
 import BasicLayOut from './pages/LayOut/BasicLayOut'
 import Home from './pages/Home/index';
 import Cookies from 'js-cookie';
-// import Introduce from './pages/Introduce/index';
-// import Login from './pages/Login/index';
 
 function HomeIndex(){
     return <div>HomeIndex</div>
@@ -38,21 +36,13 @@ const ProvideRoute = ({component: Component, path, routes, ...rest}) => {
     return <Route
             path={path}
             render = {props => {
-                return login ? <Component {...props} routes={routes}/> : <Redirect to='/login' />
+                return true ? <Component {...props} routes={routes}/> : <Redirect to='/login' />
             }}
         />
 }
 export default ProvideRoute;
 
 const routes = [
-    // {
-    //     path: "/introduce",
-    //     component: Introduce
-    // },
-    // {
-    //     path: "/login",
-    //     component: Login
-    // },
     {
         path: "/",
         component: BasicLayOut,

@@ -5,13 +5,14 @@ import { getConfig } from './config.js';
 import { debounce } from '../../../utils/utils'
 import StaticModal from '../../../components/StaticModal/view';
 import NewFormView from '../../../components/NewFormView/FormView';
-import newFormConfig from './newFormConfig';
+import {newFormConfig} from './newFormConfig';
 
 const getshow = StaticModal.getshow;
 
 const Index = (props = {}) => {
 
     const [form] = Form.useForm();
+    const [initialValueInput] = useState('1234')
     const [changeKeys, setChangeKeys] = useState([])
 
     const getName = (target) => {
@@ -48,7 +49,7 @@ const Index = (props = {}) => {
     }
 
     const config = getConfig(props, onChange);
-    const newConfig = newFormConfig({ setChangeKeys }).filter(item => !changeKeys.includes(item.name));
+    // const newConfig = newFormConfig({ setChangeKeys }).filter(item => !changeKeys.includes(item.name));
     
     return (
         <div>
@@ -62,7 +63,11 @@ const Index = (props = {}) => {
                formProps={{
                  layout: 'horizontal',
                }}
-               config={newConfig}
+               componentAssignmentProps={{
+                   onChangeState: () => {},
+                   initialValueInput
+               }}
+               config={newFormConfig}
             />
             <Button onClick={() => { handleSubmit() }}>点击提交</Button>
             <Button onClick={() => { openModal() }}>点击打开模态框</Button>

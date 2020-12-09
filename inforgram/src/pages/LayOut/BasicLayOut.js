@@ -5,7 +5,7 @@ import { Router, Route, Switch, Link, Redirect } from 'dva/router';
 import { connect } from 'dva';
 import { Layout, Breadcrumb } from 'antd';
 import ProvideRoute from '../../routeConfig'
-import './layOut.less';
+import './layout.less';
 
 @connect(
   state => {

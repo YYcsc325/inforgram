@@ -86,8 +86,10 @@ function formItemWarp(item = {}, Element ) {
 function hasUiByType(props = {}) {
   const { type, node } = props;
   // 找到对应渲染的组件
+  console.log(mapUi[type], 'sadasd')
   if (isFunc(node)) return formItemWarp(props, node);        // 第一级如果自定义渲染组件
   if (mapUi[type]) return formItemWarp(props, mapUi[type]);  // 第二季如果有映射UI
+
   return null;
 }
 

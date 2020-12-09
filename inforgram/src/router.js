@@ -1,9 +1,10 @@
 import React from 'react';
 import { Router, Route, Switch, Link, Redirect } from 'dva/router';
+
 import ProvideRoute, { routes } from './routeConfig'
 import Login from './pages/Login/index';
 import Introduce from './pages/Introduce/index';
-import Demo from './components/Demo/index'
+import Demo from './pages/Demo/index'
 
 function RouterConfig({ history }) {
   return (
