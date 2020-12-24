@@ -6,11 +6,12 @@ import { processingObj } from './utils';
 
 const FormView = ({
   form,
-  formProps = {},
-  componentAssignmentProps = {},
   config = [],
+  formProps = {},
+  stateProps = {},
   onChange = () => {},
 } = {}) => {
+  console.log(config, 'config');
   return (
     <Form {...formProps}>
       {config
@@ -18,19 +19,19 @@ const FormView = ({
 
           let Element = component || mapUi[type];
           if(typeof isShow === 'function'){
-            isShow = isShow({form, ...componentAssignmentProps});
+            isShow = isShow({form, ...stateProps});
           }
           if (!Element || !isShow) return;
           
           let RenderElement = Element;
-          let FormItem = function ({ children, formItemProp, componentAssignmentProps, ...connectProps }) {
-            return <Form.Item {...processingObj(formItemProp, 'calling', {...componentAssignmentProps, ...connectProps})}>{children}</Form.Item>;
+          let FormItem = function ({ children, formItemProp, stateProps, ...connectProps }) {
+            return <Form.Item {...processingObj(formItemProp, 'calling', {...stateProps, ...connectProps})}>{children}</Form.Item>;
           };
 
           const ItemCom = (props) => {
             const handleChange = useCallback(
               (...args) => {
-                const args1 = args.concat([{ ...componentAssignmentProps}, {...props }]);
+                const args1 = args.concat([{ ...stateProps}, {...props }]);
                 if (props.onChange) props.onChange(...args1); // 配置层组件的onChange
                 if (onChange) onChange(form.getFieldsValue()); // 最外层组件的onChange
               },
@@ -47,8 +48,8 @@ const FormView = ({
           }
 
           return ( 
-            <FormItem formItemProp={formItemProps} componentAssignmentProps={componentAssignmentProps}>
-              <RenderElement form={form} {...{...componentAssignmentProps, ...formItemProps, ...itemProps}}/>
+            <FormItem formItemProp={formItemProps} stateProps={stateProps}>
+              <RenderElement form={form} {...{...stateProps, ...formItemProps, ...itemProps}}/>
             </FormItem>
           );
         })

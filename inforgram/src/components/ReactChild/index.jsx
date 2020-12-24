@@ -10,7 +10,7 @@ const ReactChild = ({ children, onChange, ...reset }) => {
         {React.Children.map(children, (child) =>
           React.cloneElement(child, {
             onClick: () => {
-              clickKey(child.props);``
+              clickKey(child.props);
             },
           }),
         )}

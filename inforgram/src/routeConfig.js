@@ -23,6 +23,7 @@ function List(){
     </div>
 }
 function jsonParse(strObj){
+    console.log(strObj, 'strObj')
     try{
         return JSON.parse(strObj);
     }catch(e){
